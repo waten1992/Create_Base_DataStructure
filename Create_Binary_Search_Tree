@@ -65,6 +65,31 @@ int Pre_Traversal(ATree root)
     return 0 ;
 }
 
+
+int Pre_Traversal_iterator(ATree root) //previous traversal iterator 
+{
+    if( root == NULL )
+       return NULL ;
+    ATree Tmp = NULL ;
+    stack <ATree> v ; 
+
+    v.push(root); //push the root into stack
+
+    while(!v.empty())
+    {
+        Tmp = v.top(); //get the stack top vaule 
+        v.pop();      // pop the top of stack
+        cout<<Tmp->Element ; // out the current Element
+
+        if (Tmp->Right != NULL)
+            v.push(Tmp->Right);
+        if (Tmp->Left != NULL)
+             v.push(Tmp->Left) ;
+    }
+    delete Tmp ; // delete the Tmp memory
+    return 0 ;
+}
+
 int Mid_Traversal(ATree root)
 {
     if( root == NULL )
@@ -91,5 +116,24 @@ int main()
     cout<<endl<<"The Middle Traversal as follow : ";
     Mid_Traversal(root) ;
     
+    cout<<endl<<"The Previous Iterator Traversal as follow : ";
+    Pre_Traversal_iterator(root) ;
+    
     return 0 ;
 }
+
+
+
+/*
+The Answer as follow ----->
+
+The Middle Traversal as follow : 12456789
+The Previous Traversal as follow : 54216789
+The Previous Iterator Traversal as follow : 54216789
+Process returned 0 (0x0)   execution time : 0.032 s
+Press any key to continue.
+
+
+
+
+*/
