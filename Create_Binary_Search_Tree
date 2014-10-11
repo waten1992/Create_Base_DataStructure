@@ -70,8 +70,8 @@ int Pre_Traversal_iterator(ATree root) //previous traversal iterator
 {
     if( root == NULL )
        return NULL ;
-    ATree Tmp = NULL ;
-    stack <ATree> v ; 
+    ATree Tmp = NULL ;  //declare the temp point 
+    stack <ATree> v ;  //declare stack store node
 
     v.push(root); //push the root into stack
 
