@@ -16,9 +16,15 @@ template <typename Comparable>
 class BinarySearchTree
 {
 public:
-	BinarySearchTree(arguments);
-	BinarySearchTree(const BinarySearchTree &rhs);
-	~BinarySearchTree();
+	BinarySearchTree():root(NULL){}
+	BinarySearchTree(const BinarySearchTree &rhs):root(NULL)
+	{
+		*this = rhs;
+	}
+	~BinarySearchTree()
+	{
+		MakeEmpty();
+	}
 
 	const Comparable &FindMin() const ;
 	const Comparable &FindMax() const ;
@@ -123,4 +129,37 @@ BinaryNode * FindMax(BinaryNode *t) const //找最右子树,非递归版本
 		t = t->right;
 	}
 	return t;
+}
+
+void Insert(const Comparable & x , BinaryNode *& t)
+{
+	if ( t == NULL )
+		t = new BinaryNode(x , NULL ,NULL);
+	else if(x < t->element)
+		Insert(x,t->left);
+	else if( x , t->element)
+		Insert(x,t->right);
+	else
+		;
+}
+
+void Remove(const Comparable &x , BinaryNode *& t)
+{
+	if ( t == NULL )
+		return ;
+	if ( x < t->element )
+		Remove(x , t->left);
+	else if (x > t->element)
+		Remove(x , t->right);
+	else if (t->left != NULL && t->right != NULL)
+	{
+		t->element = FindMin(t->right->element);
+		Remove(t->element,t->right);
+	}
+	else
+	{
+		BinaryNode *OldNode = t ; 
+		t = (t->left != NULL) ? t->left : t->right ; //若左子节点不为空，直接指向左子树。同理右子树也一样
+		delete OldNode ;
+	}
 }
