@@ -151,10 +151,10 @@ void Remove(const Comparable &x , BinaryNode *& t)
 		Remove(x , t->left);
 	else if (x > t->element)
 		Remove(x , t->right);
-	else if (t->left != NULL && t->right != NULL)
+	else if (t->left != NULL && t->right != NULL) //有2个孩子节点时，先要找到右子树的最小孩子代替当前元素，然后在调用Remove()
 	{
-		t->element = FindMin(t->right->element);
-		Remove(t->element,t->right);
+		t->element = FindMin(t->right)->element;//找到右子树的最小孩子代替当前元素
+		Remove(t->element,t->right);//再次调用Remove()
 	}
 	else
 	{
