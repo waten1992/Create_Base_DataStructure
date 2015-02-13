@@ -1,7 +1,9 @@
 /**
- * 思路：
- *      1-把相邻的先拆成2个链表
- *      2-在交换位置合并
+ 描述：把链表按照奇偶数分开；
+ 
+ 思路：
+       1-把相邻的先拆成2个链表
+ 
  */
 #include <iostream>
 using namespace std;
@@ -18,7 +20,7 @@ protected:
     ListNode *head = new ListNode(-1);
 public:
 
-    ListNode *Separations() //Leetcode 默认没有头节点
+    ListNode *Separations() 
     {
         if (head->next == NULL || head->next->next == NULL)
             return head; //若为空链表或者只有一个元素
@@ -46,25 +48,7 @@ public:
                 Rear = Rear->next ;
                 Rear->next = NULL ;
             }
-#if 0
-            faster = new_head->next ; //重新指向new_head->next ,有头结点 ;
-            slower = head ; //无头结点
-            ListNode *new_Tmp;
-            Rear = faster ;
-            while( faster != NULL && slower != NULL ) //合并链表
-            {
-                Tmp = slower->next ; //保存下一个
-                new_Tmp = faster->next ; //保存下一个
-                faster->next = slower ; //链接下一个
-                slower->next = new_Tmp ;
-                Rear = slower;
-                faster = new_Tmp ;
-                slower = Tmp ;
-            }
-            if(slower != NULL)
-                Rear->next = slower;
-#endif
-            return new_head->next;
+            return new_head;
         }
     }
 
