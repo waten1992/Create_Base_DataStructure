@@ -17,11 +17,11 @@ class BinarySearchTree
 {
 public:
 	BinarySearchTree():root(NULL){}
-	BinarySearchTree(const BinarySearchTree &rhs):root(NULL)
+	BinarySearchTree(const BinarySearchTree &rhs):root(NULL)//构造函数
 	{
 		*this = rhs;
 	}
-	~BinarySearchTree()
+	~BinarySearchTree() //析构
 	{
 		MakeEmpty();
 	}
@@ -109,7 +109,6 @@ bool Contains (const Comparable &x , BinaryNode *t) const
 	else
 		return true ; //递归出口
 } 
-	/* data */
 };
 
 BinaryNode * FindMin(BinaryNode *t) const //找到最左的左子树就好了
@@ -177,3 +176,46 @@ void Remove(const Comparable &x , BinaryNode *& t)
 		delete OldNode ;
 	}
 }
+/*析构函数*/
+~BinarySearchTree()
+{
+	MakeEmpty();
+}
+
+void MakeEmpty (BinaryNode * &t)
+{
+	if(t != NULL)
+	{
+		MakeEmpty(t->left);
+		MakeEmpty(t->right);
+		delete t ;
+	}
+	t = NULL ; //指向空节点；
+}
+/* Deep copy */
+const BinarySearchTree &operator= (const BinaryNode *& rhs)
+{
+	if (this != &rhs)
+	{
+		MakeEmpty();
+		root = clone(rhs.root);
+	}
+	return *this ;
+}
+/*  */
+BinaryNode *clone (BinaryNode *t) const
+{
+	if (t == NULL)
+		return NULL;
+	return new BinaryNode(t->element , clone(t->left) ,clone(t->right));
+}
+
+void printTree( BinaryNode *t, ostream & out ) const //中序遍历
+    {
+        if( t != NULL )
+        {
+            PrintTree( t->left, out );
+            out << t->element << endl;
+            PrintTree( t->right, out );
+        }
+    }
