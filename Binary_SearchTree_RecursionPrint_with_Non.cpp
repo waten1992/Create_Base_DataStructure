@@ -62,39 +62,8 @@ void PrintTree (BinTree *T) //递归调用 前序遍历
 
 void NOT_RE(BinTree *T) //二叉树的 前序 非递归遍历
 {
-    BinTree *t1 , *t2 ;
-    int index = 0 ; //统计 根节点 左子树的 右孩子 个数
-    t1 = T->Left ; //左孩子
-    t2 = T->Right ; //右孩子
-    int a[10] = {0}; //存储临时 左子树的 右孩子 值
-    printf("The Non Recursion Traversal \n" );
-    printf("The root node: %d \n" , T->data );
-
-    printf("The Left tree : \n");
-    while(t1 != NULL)
-    {
-        printf("%d \t" , t1->data );
-        if ( t1->Right != NULL )
-            a[index++] = t1->Right->data; //保存 右孩子
-        t1 = t1->Left ;
-    }
-
-    for (int j = 0 ; j < index ; j++ ) //输出左子树的 右孩子
-        printf("%d \t" , a[j]);
-    printf("\nThe Root Left Child Tree of Right child tree Count: %d" , index ) ;
-
-    printf("\nThe Right tree : \n") ;
-    while(t2 != NULL)  //遍历右子树
-    {
-        printf("%d \t" , t2->data ) ;
-        if ( t2->Left != NULL )
-            printf("%d \t" , t2->Left->data);
-        t2 = t2->Right;
-    }
-
-    printf("\n");
-    free(t1); // 释放掉临时节点 ， 避免内存泄漏
-    free(t2); // 释放掉临时节点
+    // 有BUG 的代码 ,休要修改 
+    //参见 https://github.com/waten1992/Leetcode_Interview_Collection/tree/master/Tree
 }
 
 int main()
