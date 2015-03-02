@@ -1,9 +1,10 @@
 /**
  描述：把链表按照奇偶数分开；
- 
+
  思路：
        1-把相邻的先拆成2个链表
- 
+       2-如何拆，利用快慢指针拆，申请一个新的头结点方便使用；
+
  */
 #include <iostream>
 using namespace std;
@@ -17,19 +18,23 @@ struct ListNode
 class Solution
 {
 protected:
-    ListNode *head = new ListNode(-1);
+    ListNode *head ;
 public:
-
-    ListNode *Separations() 
+    Solution():head(nullptr){} //构造函数
+    ~Solution()
     {
-        if (head->next == NULL || head->next->next == NULL)
+         Destroy(head);
+    }
+    ListNode *Separations()
+    {
+        if (head== NULL || head->next == NULL)
             return head; //若为空链表或者只有一个元素
         else
         {
-            ListNode *new_head = new ListNode(-1);
+            ListNode *new_head = new ListNode(-1);//建立头结点
             ListNode *Tmp ,*Rear, *faster , *slower ;
             Rear = new_head; //指向新链表
-            slower = head->next; //指向原链表
+            slower = head; //指向原链表
             faster = slower->next; //faster快一步
             while (faster != NULL ) //拆链表
             {
@@ -48,32 +53,34 @@ public:
                 Rear = Rear->next ;
                 Rear->next = NULL ;
             }
-            return new_head;
+            return new_head->next; //新的链表是有头结点的
         }
     }
 
     void Tail_Insert(int item) //尾插法
     {
-        ListNode * Rear , * Current ;
-        Rear = head;
-        while (Rear->next != NULL) //找到最后的
-        {
-            Rear = Rear->next;
-        }
-        Current = new ListNode(item); //新建节点
-        Current->next = Rear->next;
-        Rear->next = Current ;
-        Rear = Rear->next;
-        Rear->next = NULL ;
-#if 0 //for test !
-        cout<<Current->data<<endl;
-#endif
+        Tail_Insert(head ,item);
     }
 
     void Display_List() //有头结点的输出程序
     {
+        Display_List(head);
+    }
+private:
+    void Destroy(ListNode *&Head)
+    {
         ListNode *Tmp ;
-        Tmp = head->next ;
+        while(Head != nullptr)
+        {
+            Tmp = Head->next ;
+            delete Head ;
+            Head = Tmp ;
+        }
+    }
+    void Display_List(ListNode *Head)
+    {
+        ListNode *Tmp ;
+        Tmp = Head ;
         while(Tmp != NULL)
         {
             cout<<Tmp->val<<"->";
@@ -81,7 +88,33 @@ public:
         }
         cout<<"NULL"<<endl;
     }
+     void Tail_Insert(ListNode *&Head ,int item) //尾插法
+    {
+        ListNode * Rear , * Current ;
+        Rear = Head ;
+        if (Head == nullptr) //当为空节点
+        {
+            Current = new ListNode(item); //新建节点
+            Head = Current;
+        }
+        else
+        {
+            while (Rear->next != NULL) //找到最后的
+            {
+                Rear = Rear->next;
+            }
 
+            Current = new ListNode(item); //新建节点
+            Current->next = Rear->next;
+            Rear->next = Current ;
+            Rear = Rear->next;
+            Rear->next = NULL ;
+        }
+
+#if 0 //for test !
+        cout<<Current->val<<endl;
+#endif
+    }
 };
 
 int main()
